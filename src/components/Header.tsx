@@ -46,7 +46,7 @@ export function Header() {
           </span>
           <span className="hidden flex-col leading-none sm:flex">
             <span className="font-condensed text-[11px] uppercase tracking-[0.32em] text-[var(--color-paper)]/80">
-              REIZ / ARCHIVE
+              RIZS / ARCHIVE
             </span>
             <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-[var(--color-paper)]/40">
               {formatDateID(now)} · {formatTime(now)} WIB

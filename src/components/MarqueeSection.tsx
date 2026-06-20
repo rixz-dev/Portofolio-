@@ -5,7 +5,7 @@ export function MarqueeSection() {
     <>
       <Marquee
         items={[
-          "REIZ / ARCHIVE",
+          "RIZS / ARCHIVE",
           "EST. 2009",
           "SOFTWARE / AI / CRYPTO",
           "INDONESIA",

@@ -125,7 +125,7 @@ export function Hero() {
             <dl className="grid grid-cols-2 gap-x-6 gap-y-4 border border-[var(--color-bone-2)]/20 p-5 sm:grid-cols-3 lg:grid-cols-2">
               {[
                 ["NAME", "ACHMAD FARIZY"],
-                ["HANDLE", "@REIZ"],
+                ["HANDLE", "@RIZS"],
                 ["BORN", "04 / 03 / 2009"],
                 ["AGE", "17"],
                 ["CITY", "IDN / WIB"],

@@ -110,3 +110,46 @@ Catatan:
 - Cara ini butuh koneksi internet saat website dibuka.
 - Kalau API screenshot down / kena limit / target web memblokir screenshot, portfolio otomatis balik ke placeholder.
 - Untuk hasil paling stabil, deploy API screenshot sendiri di Vercel lalu ganti URL di fungsi `getProjectScreenshotUrl()` pada `src/components/ProjectSlider.tsx`.
+
+## Foto Story / Biography
+
+Bagian `Story` sekarang otomatis mencari foto di:
+
+```txt
+public/media/story-photo.jpg
+```
+
+Jadi cukup lakukan ini:
+
+1. Siapkan foto portrait, disarankan rasio kotak `1:1`, misalnya `1080x1080`.
+2. Rename file menjadi:
+
+   ```txt
+   story-photo.jpg
+   ```
+
+3. Taruh di folder:
+
+   ```txt
+   public/media/story-photo.jpg
+   ```
+
+4. Jalankan website:
+
+   ```bash
+   npm run dev
+   ```
+
+Kalau ingin memakai format lain, ubah konstanta di `src/components/Story.tsx`:
+
+```ts
+const STORY_PHOTO_SRC = "/media/story-photo.jpg";
+```
+
+Contoh untuk WebP:
+
+```ts
+const STORY_PHOTO_SRC = "/media/story-photo.webp";
+```
+
+Jika file belum ada atau gagal dimuat, Story akan tetap aman dan menampilkan placeholder.
