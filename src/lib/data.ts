@@ -165,14 +165,14 @@ export interface StackItem {
 }
 
 export const stack: StackItem[] = [
-  { name: "Python", level: 78, since: "2023" },
-  { name: "JavaScript", level: 72, since: "2024" },
-  { name: "Node.js", level: 70, since: "2024" },
+  { name: "Python", level: 23, since: "2023" },
+  { name: "JavaScript", level: 47, since: "2024" },
+  { name: "Node.js", level: 32, since: "2024" },
   { name: "NPM", level: 80, since: "2024" },
-  { name: "CSS", level: 74, since: "2024" },
-  { name: "SQLite", level: 64, since: "2025" },
-  { name: "Git & GitHub", level: 76, since: "2024" },
-  { name: "Cryptography", level: 58, since: "2025" },
+  { name: "CSS", level: 21, since: "2025" },
+  { name: "SQLite", level: 32, since: "2025" },
+  { name: "Git & GitHub", level: 76, since: "2026" },
+  { name: "Cryptography", level: 58, since: "2026" },
 ];
 
 export interface ExperienceItem {
