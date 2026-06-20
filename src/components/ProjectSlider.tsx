@@ -14,9 +14,15 @@ export function ProjectSlider() {
   const [active, setActive] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const [drag, setDrag] = useState<{ x: number; dx: number } | null>(null);
-  const [transitioning, setTransitioning] = useState(false);
+  const dragRef = useRef<{ x: number; dx: number } | null>(null);
+  const suppressClickRef = useRef(false);
+  const activeRef = useRef(active);
+  const transitioningRef = useRef(false);
   const total = projects.length;
+
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
 
   useEffect(() => {
     const el = trackRef.current;
@@ -62,27 +68,42 @@ export function ProjectSlider() {
   }, [active, total]);
 
   function go(idx: number) {
-    if (transitioning) return;
-    setTransitioning(true);
-    setActive(idx);
-    window.setTimeout(() => setTransitioning(false), 620);
+    if (!total) return;
+    const next = (idx + total) % total;
+    if (next === activeRef.current) return;
+    if (transitioningRef.current) return;
+
+    transitioningRef.current = true;
+    setActive(next);
+    window.setTimeout(() => {
+      transitioningRef.current = false;
+    }, 620);
   }
 
   // touch / drag
+  // Ref-based drag prevents stale state and stops the post-swipe click from
+  // selecting the card under the finger/mouse (common mobile slider bug).
   function onPointerDown(e: React.PointerEvent) {
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    setDrag({ x: e.clientX, dx: 0 });
+    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+    dragRef.current = { x: e.clientX, dx: 0 };
+    suppressClickRef.current = false;
   }
   function onPointerMove(e: React.PointerEvent) {
+    const drag = dragRef.current;
     if (!drag) return;
-    setDrag({ x: drag.x, dx: e.clientX - drag.x });
+    drag.dx = e.clientX - drag.x;
+    if (Math.abs(drag.dx) > 8) suppressClickRef.current = true;
   }
-  function onPointerUp() {
+  function onPointerUp(e: React.PointerEvent) {
+    const drag = dragRef.current;
     if (!drag) return;
+
+    (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
+    dragRef.current = null;
+
     const threshold = 60;
-    if (drag.dx > threshold) go((active - 1 + total) % total);
-    else if (drag.dx < -threshold) go((active + 1) % total);
-    setDrag(null);
+    if (drag.dx > threshold) go(activeRef.current - 1);
+    else if (drag.dx < -threshold) go(activeRef.current + 1);
   }
 
   const p = projects[active];
@@ -102,7 +123,7 @@ export function ProjectSlider() {
               </h2>
             </div>
             <div className="hidden font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--color-paper)]/45 sm:block">
-              06 ITEMS / {String(active + 1).padStart(2, "0")} OF {String(total).padStart(2, "0")}
+              {String(total).padStart(2, "0")} ITEMS / {String(active + 1).padStart(2, "0")} OF {String(total).padStart(2, "0")}
             </div>
           </div>
         </Reveal>
@@ -225,7 +246,7 @@ export function ProjectSlider() {
         <Reveal delay={240}>
           <div className="mt-12 border border-[var(--color-bone-2)]/20">
             <div className="flex items-center justify-between border-b border-[var(--color-bone-2)]/20 bg-[var(--color-ink)]/70 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--color-paper)]/55">
-              <span>REEL / 06</span>
+              <span>REEL / {String(total).padStart(2, "0")}</span>
               <span className="hidden sm:block">DRAG · SWIPE · ARROW KEYS</span>
               <span>{String(active + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
             </div>
@@ -248,7 +269,13 @@ export function ProjectSlider() {
                     cardRefs.current[i] = el;
                   }}
                   type="button"
-                  onClick={() => go(i)}
+                  onClick={() => {
+                    if (suppressClickRef.current) {
+                      suppressClickRef.current = false;
+                      return;
+                    }
+                    go(i);
+                  }}
                   className={cn(
                     "group relative h-slide min-w-[78%] snap-center bg-[var(--color-ink)] p-5 text-left transition-colors sm:min-w-[44%] lg:min-w-[28%] xl:min-w-[24%]",
                     i === active

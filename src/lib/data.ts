@@ -222,7 +222,7 @@ export const experiences: ExperienceItem[] = [
 ];
 
 export const socials = [
-  { label: "WhatsApp", value: "CHANNEL", href: "https://whatsapp.com/channel/0029Vb7w7clK5cD9rAxc6r20" },
+  { label: "WhatsApp", value: "+62 858-2857-7232", href: "https://wa.me/6285828577232" },
   { label: "GitHub", value: "rixz-dev", href: "https://github.com/rixz-dev" },
   { label: "Telegram", value: "RIXZDEV", href: "https://t.me/rixzdev" },
   { label: "Saweria", value: "riznotdev", href: "https://saweria.co/riznotdev" },
