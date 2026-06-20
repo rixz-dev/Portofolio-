@@ -83,3 +83,30 @@ media: { kind: "none" }
 ```
 
 Jadi yang perlu diubah biasanya hanya `src/lib/data.ts` dan file media di folder asset/public.
+
+## Opsi 3 — Otomatis screenshot dari URL project
+
+`ProjectSlider.tsx` sudah ditambahkan fallback otomatis: kalau `media` kosong (`kind: "none"`) atau `kind: "image"` tapi `src` kosong, slider akan mencoba mengambil screenshot dari `project.href`.
+
+Contoh RXS-CODE sekarang cukup seperti ini:
+
+```ts
+media: {
+  kind: "none",
+},
+href: "https://rxs-code.vercel.app",
+```
+
+Screenshot dibuat lewat endpoint:
+
+```txt
+https://capture-website-api.vercel.app/api/capture?url=...
+```
+
+Jadi kamu tidak wajib menaruh file gambar manual untuk project yang punya `href`.
+
+Catatan:
+
+- Cara ini butuh koneksi internet saat website dibuka.
+- Kalau API screenshot down / kena limit / target web memblokir screenshot, portfolio otomatis balik ke placeholder.
+- Untuk hasil paling stabil, deploy API screenshot sendiri di Vercel lalu ganti URL di fungsi `getProjectScreenshotUrl()` pada `src/components/ProjectSlider.tsx`.

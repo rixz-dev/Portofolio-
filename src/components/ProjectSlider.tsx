@@ -412,13 +412,16 @@ export function ProjectSlider() {
 }
 
 function ProjectMedia({ project }: { project: Project }) {
+  const [fallback, setFallback] = useState(false);
+  const screenshotSrc = getProjectScreenshotUrl(project);
+
   if (project.media.kind === "video" && project.media.src) {
     return (
       <div className="relative aspect-[4/3] w-full bg-[var(--color-ink)]">
         <video
           className="h-full w-full object-cover"
           src={project.media.src}
-          poster={project.media.poster}
+          poster={project.media.poster || screenshotSrc}
           autoPlay
           muted
           loop
@@ -428,28 +431,52 @@ function ProjectMedia({ project }: { project: Project }) {
       </div>
     );
   }
-  if (project.media.kind === "image" && project.media.src) {
+
+  const imageSrc =
+    project.media.kind === "image" && project.media.src
+      ? project.media.src
+      : screenshotSrc;
+
+  if (imageSrc && !fallback) {
     return (
-      <div className="relative aspect-[4/3] w-full">
+      <div className="relative aspect-[4/3] w-full bg-[var(--color-ink)]">
         <img
-          src={project.media.src}
-          alt={project.name}
+          src={imageSrc}
+          alt={`${project.name} website preview`}
           className="h-full w-full object-cover"
           loading="lazy"
+          referrerPolicy="no-referrer"
+          onError={() => setFallback(true)}
         />
       </div>
     );
   }
+
   return (
     <div className="p-4">
       <Placeholder
         label={project.name}
         index={project.index}
-        hint="PREVIEW UNAVAILABLE"
+        hint={project.href ? "SCREENSHOT UNAVAILABLE" : "PREVIEW UNAVAILABLE"}
         ratio="4/3"
       />
     </div>
   );
+}
+
+function getProjectScreenshotUrl(project: Project) {
+  if (!project.href) return "";
+
+  const params = new URLSearchParams({
+    url: project.href,
+    width: "1280",
+    height: "960",
+    scaleFactor: "1",
+    disableAnimations: "true",
+    wait_before_screenshot_ms: "800",
+  });
+
+  return `https://capture-website-api.vercel.app/api/capture?${params.toString()}`;
 }
 
 function Arrow({ dir = "right" }: { dir?: "left" | "right" }) {

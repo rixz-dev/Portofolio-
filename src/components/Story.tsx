@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { Placeholder } from "./Placeholder";
 import { Reveal } from "./Reveal";
+
+const STORY_PHOTO_SRC = "/media/story-photo.jpg";
 
 export function Story() {
   return (
@@ -13,11 +16,10 @@ export function Story() {
           className="absolute -right-20 top-10 h-[60vw] w-[60vw] max-h-[680px] max-w-[680px] opacity-30 blur-3xl saturate-0"
           aria-hidden="true"
         >
-          <Placeholder
-            label=""
-            index=""
-            ratio="1/1"
-            className="!aspect-square !border-0"
+          <StoryPhoto
+            className="h-full w-full object-cover"
+            fallbackClassName="!aspect-square !border-0"
+            decorative
           />
         </div>
         <div
@@ -28,11 +30,10 @@ export function Story() {
           className="absolute -left-32 bottom-10 h-[50vw] w-[50vw] max-h-[520px] max-w-[520px] opacity-20 blur-3xl saturate-0"
           aria-hidden="true"
         >
-          <Placeholder
-            label=""
-            index=""
-            ratio="1/1"
-            className="!aspect-square !border-0"
+          <StoryPhoto
+            className="h-full w-full object-cover"
+            fallbackClassName="!aspect-square !border-0"
+            decorative
           />
         </div>
       </div>
@@ -61,12 +62,7 @@ export function Story() {
             <div className="relative">
               <div className="relative overflow-hidden border border-[var(--color-bone-2)]/25">
                 <div className="relative aspect-square">
-                  <Placeholder
-                    label="ACHMAD FARIZY"
-                    index="P / 01"
-                    hint="REPLACE WITH YOUR PHOTO"
-                    ratio="1/1"
-                  />
+                  <StoryPhoto />
                   <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0)_40%,rgba(10,10,10,0.85)_100%)]" />
                 </div>
               </div>
@@ -153,5 +149,41 @@ export function Story() {
         </Reveal>
       </div>
     </section>
+  );
+}
+
+
+function StoryPhoto({
+  className = "h-full w-full object-cover grayscale",
+  fallbackClassName,
+  decorative = false,
+}: {
+  className?: string;
+  fallbackClassName?: string;
+  decorative?: boolean;
+}) {
+  const [failed, setFailed] = useState(false);
+
+  if (!failed) {
+    return (
+      <img
+        src={STORY_PHOTO_SRC}
+        alt={decorative ? "" : "Portrait Achmad Farizy"}
+        aria-hidden={decorative || undefined}
+        className={className}
+        loading="lazy"
+        onError={() => setFailed(true)}
+      />
+    );
+  }
+
+  return (
+    <Placeholder
+      label={decorative ? "" : "ACHMAD FARIZY"}
+      index={decorative ? "" : "P / 01"}
+      hint={decorative ? undefined : "ADD /public/media/story-photo.jpg"}
+      ratio="1/1"
+      className={fallbackClassName}
+    />
   );
 }
