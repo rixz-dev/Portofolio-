@@ -143,7 +143,7 @@ export function Story() {
               <span className="text-[var(--color-paper)]/30">"</span>
             </blockquote>
             <div className="mt-6 font-mono text-[10px] uppercase tracking-[0.32em] text-[var(--color-paper)]/45">
-              — RIZS / 2026
+              — REIZ / 2026
             </div>
           </div>
         </Reveal>

@@ -78,7 +78,7 @@ export function Hero() {
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="font-mono text-[9px] uppercase tracking-[0.32em] text-[var(--color-paper)]/35 rotate-90">
-                RIZS / ARCHIVE
+                REIZ / ARCHIVE
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@ export function Hero() {
             <dl className="grid grid-cols-2 gap-x-6 gap-y-4 border border-[var(--color-bone-2)]/20 p-5 sm:grid-cols-3 lg:grid-cols-2">
               {[
                 ["NAME", "ACHMAD FARIZY"],
-                ["HANDLE", "@RIZS"],
+                ["HANDLE", "@REIZ"],
                 ["BORN", "04 / 03 / 2009"],
                 ["AGE", "17"],
                 ["CITY", "IDN / WIB"],

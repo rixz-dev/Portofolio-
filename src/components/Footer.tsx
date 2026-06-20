@@ -13,8 +13,6 @@ export function Footer() {
             </div>
             <p className="mt-3 max-w-[44ch] text-[13px] leading-[1.7] text-[var(--color-paper)]/65">
               Dibuat tangan dengan React, Tailwind, dan sedikit kesabaran.
-              Tidak ada emoji keyboard, tidak ada warna mencolok, tidak
-              ada template generik.
             </p>
           </div>
 
@@ -23,7 +21,7 @@ export function Footer() {
               BUILD
             </div>
             <ul className="mt-3 space-y-1 font-condensed text-[13px] uppercase tracking-[0.06em] text-[var(--color-paper)]/80">
-              <li>v 1.0 / RIZS</li>
+              <li>v 1.0 / REIZ_RIZ</li>
               <li>REACT 19 / VITE</li>
               <li>TAILWIND 4</li>
             </ul>

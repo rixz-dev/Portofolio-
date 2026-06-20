@@ -68,7 +68,7 @@ export function Stack() {
               NONE :)
             </div>
             <p className="mt-3 max-w-[60ch] text-[14px] leading-[1.7] text-[var(--color-paper)]/65 sm:text-[15px]">
-              Tidak ada sertifikat. Hanya catatan,源代码 yang berjalan, dan
+              Tidak ada sertifikat. Hanya catatan, kode sumber yang berjalan, dan
               rasa ingin tahu yang tidak pernah padam.
             </p>
           </div>
