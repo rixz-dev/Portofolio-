@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ach-farizy.vercel.app/sitemap.xml
