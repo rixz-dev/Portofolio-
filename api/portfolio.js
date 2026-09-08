@@ -11,7 +11,9 @@ export default async function handler(req, res) {
       supabase.from('farizy_profile').select('*').eq('id', 'main').single(),
       supabase.from('farizy_projects').select('*').order('sort_order', { ascending: true }),
       supabase.from('farizy_services').select('*').order('sort_order', { ascending: true }),
-    ]);
+    ].map(query => query
+      .setHeader('apikey', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+      .setHeader('Authorization', `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`)));
     for (const result of [profile, projects, services]) if (result.error) throw result.error;
     res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
     return res.status(200).json({ profile: profile.data, projects: projects.data, services: services.data });

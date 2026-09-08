@@ -1,5 +1,10 @@
+import { useRef } from 'react';
+import { useInView } from 'framer-motion';
+
 export function Doodle({ kind = 'star', className = '' }: { kind?: 'star' | 'arrow' | 'flower' | 'heart' | 'spark' | 'loop'; className?: string }) {
-  return <svg className={`doodle ${className}`} width="100" height="100" viewBox="0 0 100 100" fill="none" aria-hidden="true" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  const ref = useRef<SVGSVGElement>(null);
+  const visible = useInView(ref, { once: true, amount: 0.25 });
+  return <svg ref={ref} data-drawn={visible} className={`doodle ${className}`} width="100" height="100" viewBox="0 0 100 100" fill="none" aria-hidden="true" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     {kind === 'star' && <path pathLength="1" d="M49 7 59 38 91 28 70 52 90 78 58 67 43 94 39 64 8 67 29 46 13 22 42 32 49 7Z" />}
     {kind === 'arrow' && <><path pathLength="1" d="M13 13C60 8 94 27 73 51S23 55 39 40 85 56 65 88" /><path pathLength="1" d="m55 78 9 13 13-9" /></>}
     {kind === 'flower' && <><path pathLength="1" d="M49 37C13-3 82-4 59 37 102 2 106 72 64 54 107 89 41 115 45 67 16 112-13 48 36 49-6 27 49-7 49 37Z" /><circle cx="50" cy="51" r="8" /></>}
